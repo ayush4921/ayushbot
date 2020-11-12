@@ -15,21 +15,12 @@ setup(
   download_url = 'https://github.com/ayush4921/ayushbot/archive/0.0.1.tar.gz',    # I explain this later on
   keywords = ['whatsapp','mitsuku','kuki','chatbot'],   # Keywords that define your package best
   install_requires=[            # I get to this in a second
-          'os',
-          'time',
-          'json',
-          'random',
-          're',
-          'sys',
-          'urllib.parse',
           'beautifulsoup4==4.6.3',
           'lxml==4.6.1',
           'Pillow==7.0.0',
           'requests==2.20.0',
           'selenium==3.12.0',
-          'PIL',
-          'pickle',
-          'shutil'
+          'Pillow',
       ],
   classifiers=[
     'Development Status :: 3 - Alpha',      # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable" as the current state of your package
