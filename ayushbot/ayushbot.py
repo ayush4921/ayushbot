@@ -1,5 +1,5 @@
 import os
-from whatsapp import WhatsApp
+from .whatsapp import WhatsApp
 import time
 import json
 import random
