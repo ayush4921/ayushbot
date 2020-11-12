@@ -39,7 +39,6 @@ class WhatsApp:
     """
     This class is used to interact with your whatsapp [UNOFFICIAL API]
     """
-    emoji = {}  # This dict will contain all emojies needed for chatting
     browser = None
     timeout = 10  # The timeout is set for about ten seconds
 
@@ -53,8 +52,8 @@ class WhatsApp:
             self.browser = webdriver.Chrome()
         self.browser.get("https://web.whatsapp.com/")
         # emoji.json is a json file which contains all the emojis
-        with open("emoji.json") as emojies:
-            self.emoji = json.load(emojies)  # This will load the emojies present in the json file into the dict
+     
+       # This will load the emojies present in the json file into the dict
         WebDriverWait(self.browser,wait).until(EC.presence_of_element_located(
             (By.CSS_SELECTOR, '._3FRCZ')))
         if screenshot is not None:
@@ -65,7 +64,6 @@ class WhatsApp:
     # This method is used to send the message to the individual person or a group
     # will return true if the message has been sent, false else
     def send_message(self, name, message):
-        message = self.emojify(message)  # this will emojify all the emoji which is present as the text in string
         search = self.browser.find_element_by_css_selector(self.search_selector)
         search.send_keys(name+Keys.ENTER)  # we will send the name to the input key box
         try:
@@ -247,7 +245,7 @@ class WhatsApp:
     # you can use this method to recursively send the messages to the same person
     def send_blind_message(self, message):
         try:
-            message = self.emojify(message)
+            
             send_msg = WebDriverWait(self.browser, self.timeout).until(EC.presence_of_element_located(
                 (By.XPATH, "/html/body/div/div/div/div[4]/div/footer/div[1]/div[2]/div/div[2]")))
             messages = message.split("\n")
@@ -343,10 +341,7 @@ class WhatsApp:
         self.timeout = new_timeout
 
     # This method is used to emojify all the text emoji's present in the message
-    def emojify(self,message):
-        for emoji in self.emoji:
-            message = message.replace(emoji,self.emoji[emoji])
-        return message
+
 
     def get_profile_pic(self, name):
         search = self.browser.find_element_by_css_selector(self.search_selector)

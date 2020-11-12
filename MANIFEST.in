@@ -1,2 +1,0 @@
-recursive-include ayushbot/ *.json
-recursive-include ayushbot/db.sqlite3
