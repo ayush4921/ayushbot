@@ -37,9 +37,22 @@ try:
 except ModuleNotFoundError:
     print("Beautiful Soup Library is reqired to make this library work(For getting participants list for the specified group).\npip3 install beautifulsoup4")
 
-chromedriver_autoinstaller.install()
 
 def ayushbot(receiver):
+    client_name = str(random.randint(1337, 9696913371337)).rjust(13, '0')
+    url = 'https://www.pandorabots.com/mitsuku/'
+    session = requests.Session()
+    session.headers.update({
+        'User-Agent': ' '.join(('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2)',
+                                'AppleWebKit/537.36 (KHTML, like Gecko)',
+                                'Chrome/72.0.3626.119 Safari/537.36')),
+        'Referer': url
+    })
+
+    main_page = session.get(url).text
+    main_soup = bs4.BeautifulSoup(main_page, 'lxml')
+    botkey = re.search(r'PB_BOTKEY: "(.*)"', main_page).groups()[0]
+    chromedriver_autoinstaller.install()
     
     whatsapp = WhatsApp(100, session="mysession")
     whatsapp.send_message(receiver, "AyushBOT will serve you till Ayush comes online and answers your questions. As it is still very young AyushBOT can act very stupid sometimes. Please dont mind it. Start talking with AyushBOT below")
@@ -59,23 +72,46 @@ def ayushbot(receiver):
                 newmessages=newmessages[:-5]
 
             if newmessages[-1][-1] != newmessages[-2][-1]:
-                
-                query=str(messages[-1])
-                
-
-                content2 = driver.find_element_by_xpath("//input[@class='pb-widget__input__message__input']")
-                time.sleep(2)
-
-                content2.send_keys(query)
-                content2.submit()
-                time.sleep(5)
                 try:
-                    content3 = driver.find_elements_by_xpath("//div[@class='pb-chat-bubble pb-chat-bubble__bot']")
-                    answer=content3[-1].text
+                    query=str(messages[-1])
+                    
 
+                    content2 = driver.find_element_by_xpath("//input[@class='pb-widget__input__message__input']")
+                    time.sleep(2)
+
+                    content2.send_keys(query)
+                    content2.submit()
+                    time.sleep(5)
+                    try:
+                        content3 = driver.find_elements_by_xpath("//div[@class='pb-chat-bubble pb-chat-bubble__bot']")
+                        answer=content3[-1].text
+
+                    except:
+                        answer='Indeed'
+                    response=answer
                 except:
-                    answer='Indeed'
-                response=answer
+                    chrome_options = Options()
+                    driver = webdriver.Chrome()
+
+                    driver.get("https://www.pandorabots.com/mitsuku/")
+                    content = driver.find_element_by_xpath("//button[@class='pb-widget__launcher pb-widget__launcher__open']")
+                    content.click()
+                    query=str(messages[-1])
+                    
+
+                    content2 = driver.find_element_by_xpath("//input[@class='pb-widget__input__message__input']")
+                    time.sleep(2)
+
+                    content2.send_keys(query)
+                    content2.submit()
+                    time.sleep(5)
+                    try:
+                        content3 = driver.find_elements_by_xpath("//div[@class='pb-chat-bubble pb-chat-bubble__bot']")
+                        answer=content3[-1].text
+
+                    except:
+                        answer='Indeed'
+                    response=answer
                 
 
 
